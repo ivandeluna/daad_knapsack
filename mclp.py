@@ -25,6 +25,7 @@ l = 8 # Plantas manufactureras j
 n = 5 # Almacenes i
 k = 2 # nuevos almacenes considerados
 
+
 # La matriz correspondiente esta definida de la siguiente manera:
 
 A=np.array([[0.81286, 0.25123, 0.0,     0.54893, 1.0, 0.77105, 0.0,     0.64741],
@@ -105,6 +106,7 @@ D2 = np.inner(A.transpose(),solE2)
 ###########
 I2 = np.zeros((2**l-1))
 
+
 for i in range(0, 2**l-1):
     if ((Z2[i,0] <= D2[0]) and
         (Z2[i,1] <= D2[1]) and
@@ -115,6 +117,13 @@ for i in range(0, 2**l-1):
         (Z2[i,6] <= D2[6]) and
         (Z2[i,7] <= D2[7])):
         I2[i] = 1
+'''
+       
+for i in range(0,2**l-1):
+    if all(Z2[i,] <= D2.all()):
+        I2[i] = 1
+'''        
+        
 # Discriminar de vector de funcion objetivo X la combinacion que cumple la
 # restriccion  
 X2 = np.inner(w,Z2)
