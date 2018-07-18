@@ -1,17 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 21 20:31:09 2018
+Created on Sat Apr 21 12:54:55 2018
 
-Algoritmo en python del ejercicio creado en:
-
-A Novel Numerical Approach to the MCLP Based Resilent Supply Chain Optimization
-V. Azhmyakov, J.P. Fernández-Gutiérrez, S.K. Gadi, St. Pickl
-
-5. Application to the optimal design of a resilent supply chain management
-    system
-    
-@author: ivand
+@author: josea
 """
+
 import numpy as np
 # El ejercicio contempla un modelo MCLP básico y optimiza una cadena de
 # suministro resilente para un conjunto de plantas manufactureras y
@@ -98,7 +91,7 @@ for i in range(0,2**n-1):
 
 X1 = np.dot(Z1, S)
 XM1 = X1.transpose()*I1
-XM1 = XM1.transpose()               
+#XM1 = XM1.transpose()               
 fOptimE2 = XM1.max()
 solE2 = sol(XM1, fOptimE2, Z1)
 
@@ -106,28 +99,35 @@ D2 = np.inner(A.transpose(),solE2)
 ###########
 I2 = np.zeros((2**l-1))
 
-
+aux=np.ones((2**l-1))
 for i in range(0, 2**l-1):
-    if ((Z2[i,0] <= D2[0]) and
-        (Z2[i,1] <= D2[1]) and
-        (Z2[i,2] <= D2[2]) and
-        (Z2[i,3] <= D2[3]) and
-        (Z2[i,4] <= D2[4]) and
-        (Z2[i,5] <= D2[5]) and
-        (Z2[i,6] <= D2[6]) and
-        (Z2[i,7] <= D2[7])):
+    for k in range(0,l-1):
+        aux[k]=Z2[i,k] <= D2[k]
+    if (np.all(aux)==True):
         I2[i] = 1
+#    aux=[row[i] for row in Z2]
+#    if (np.all(aux <= D2)==True):
+#        I2[i]=1
+#    if ((Z2[i,0] <= D2[0]) and
+#        (Z2[i,1] <= D2[1]) and
+#        (Z2[i,2] <= D2[2]) and
+#        (Z2[i,3] <= D2[3]) and
+#        (Z2[i,4] <= D2[4]) and
+#        (Z2[i,5] <= D2[5]) and
+#        (Z2[i,6] <= D2[6]) and
+#        (Z2[i,7] <= D2[7])):
+#        I2[i] = 1
 '''
        
 for i in range(0,2**l-1):
-    if (Z2[i,].all() <= D2.all()):
+    if all(Z2[i,] <= D2.all()):
         I2[i] = 1
- '''       
+'''        
         
 # Discriminar de vector de funcion objetivo X la combinacion que cumple la
 # restriccion  
 X2 = np.inner(w,Z2)
-XM2 = X2*I2
+XM2 =X2*I2
 fOptimE3 = XM2.max()
 solE3 = sol(XM2, fOptimE3, Z2)
 
@@ -136,6 +136,5 @@ print(fOptimE2)
 print(solE3)
 print(fOptimE3)
 
-
-
-
+#print(Z2)
+#print(I2)
